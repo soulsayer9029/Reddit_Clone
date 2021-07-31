@@ -1,0 +1,1 @@
+{"version":3,"file":"validatePost.js","sourceRoot":"","sources":["../../src/utils/validatePost.ts"],"names":[],"mappings":";;;AAGO,MAAM,YAAY,GAAC,CAAC,KAAe,EAAC,EAAE;IACzC,IAAG,KAAK,CAAC,IAAI,CAAC,MAAM,GAAC,EAAE,EAAC;QACpB,OAAM;YACF;gBACI,KAAK,EAAC,MAAM;gBACZ,OAAO,EAAC,kDAAkD;aAC7D;SACJ,CAAA;KACJ;IACD,OAAO,IAAI,CAAC;AAChB,CAAC,CAAA;AAVY,QAAA,YAAY,gBAUxB"}
