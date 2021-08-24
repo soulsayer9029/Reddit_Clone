@@ -136,7 +136,7 @@ export class UserResolver{
                     // user=result.raw[0]
                 }catch(e){
                     //duplicate error code is 23505
-                    console.log("hi")
+                    
                     if(e.detail.includes("already exists")){
                         if(e.detail.includes("username")){
                         return{

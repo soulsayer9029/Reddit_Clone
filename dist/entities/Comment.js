@@ -9,58 +9,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Comment = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const Comment_1 = require("./Comment");
 const Post_1 = require("./Post");
-const Updoot_1 = require("./Updoot");
-let User = class User extends typeorm_1.BaseEntity {
+const User_1 = require("./User");
+let Comment = class Comment extends typeorm_1.BaseEntity {
 };
 __decorate([
     type_graphql_1.Field(() => type_graphql_1.Int),
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Comment.prototype, "id", void 0);
 __decorate([
     type_graphql_1.Field(),
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => Post_1.Post, post => post.creator),
-    __metadata("design:type", Array)
-], User.prototype, "posts", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => Updoot_1.Updoot, updoot => updoot.user),
-    __metadata("design:type", Array)
-], User.prototype, "updoots", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => Comment_1.Comment, comment => comment.commentor),
-    __metadata("design:type", Array)
-], User.prototype, "comments", void 0);
-__decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Comment.prototype, "text", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => User_1.User, (user) => user.comments),
+    __metadata("design:type", User_1.User)
+], Comment.prototype, "commentor", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => Post_1.Post, (post) => post.comments),
+    __metadata("design:type", Post_1.Post)
+], Comment.prototype, "post", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Comment.prototype, "postId", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Comment.prototype, "commentorId", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], Comment.prototype, "createdAt", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     typeorm_1.UpdateDateColumn(),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-User = __decorate([
+], Comment.prototype, "updatedAt", void 0);
+__decorate([
+    type_graphql_1.Field(() => type_graphql_1.Int, { nullable: true }),
+    typeorm_1.Column({ nullable: true }),
+    __metadata("design:type", Number)
+], Comment.prototype, "parentId", void 0);
+Comment = __decorate([
     type_graphql_1.ObjectType(),
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=User.js.map
+], Comment);
+exports.Comment = Comment;
+//# sourceMappingURL=Comment.js.map

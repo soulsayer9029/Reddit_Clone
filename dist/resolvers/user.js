@@ -148,7 +148,6 @@ let UserResolver = class UserResolver {
                 }).save();
             }
             catch (e) {
-                console.log("hi");
                 if (e.detail.includes("already exists")) {
                     if (e.detail.includes("username")) {
                         return {

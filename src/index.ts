@@ -18,6 +18,8 @@ import path from 'path'
 import { Updoot } from "./entities/Updoot"
 import { createUserLoader } from "./utils/createUserLoader"
 import { createUpdootLoader } from "./utils/createUpdootLoader"
+import { Comment } from "./entities/Comment"
+import { CommentResolver } from "./resolvers/comments"
 
 const RedisStore = connectRedis(session)
 const redis = new Redis()
@@ -54,7 +56,7 @@ const main =async()=>{
         password:'kdb17',
         logging:true,
         synchronize:true,
-        entities:[Post,User,Updoot],
+        entities:[Post,User,Updoot,Comment],
         migrations:[path.join(__dirname,'./migrations/*')]
     });
     await connection.runMigrations()
@@ -66,7 +68,7 @@ const main =async()=>{
     })
     const apolloServer=new ApolloServer({
         schema:await buildSchema({
-            resolvers:[HelloResolver,PostResolver,UserResolver],
+            resolvers:[HelloResolver,PostResolver,UserResolver,CommentResolver],
             validate:false
         }),
         context:({req,res}):MyContext =>({req,res,redis,userLoader:createUserLoader(),updootLoader:createUpdootLoader()})
