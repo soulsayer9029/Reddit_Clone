@@ -58,7 +58,7 @@ const Index = () =>
                      </Link>
                   </NextLink>
                
-               <div>posted by:-{p.creator.username}</div>
+               <div>posted by:-@{p.creator.username}</div>
                <br/>
                <Flex>
                <div >{p.textSnippet}</div>

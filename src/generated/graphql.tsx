@@ -14,6 +14,18 @@ export type Scalars = {
   Float: number;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['Int'];
+  text: Scalars['String'];
+  postId: Scalars['Float'];
+  commentorId: Scalars['Float'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  parentId?: Maybe<Scalars['Int']>;
+  commentor: User;
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -31,6 +43,7 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
+  createComment?: Maybe<Comment>;
 };
 
 
@@ -78,6 +91,13 @@ export type MutationLoginArgs = {
   usernameOrEmail: Scalars['String'];
 };
 
+
+export type MutationCreateCommentArgs = {
+  postId: Scalars['Int'];
+  parentId?: Maybe<Scalars['Int']>;
+  text: Scalars['String'];
+};
+
 export type PaginatedPosts = {
   __typename?: 'PaginatedPosts';
   posts: Array<Post>;
@@ -109,6 +129,7 @@ export type Query = {
   posts: PaginatedPosts;
   post?: Maybe<Post>;
   me?: Maybe<User>;
+  getComments?: Maybe<Array<Comment>>;
 };
 
 
@@ -120,6 +141,11 @@ export type QueryPostsArgs = {
 
 export type QueryPostArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryGetCommentsArgs = {
+  postId: Scalars['Int'];
 };
 
 export type User = {
@@ -185,6 +211,21 @@ export type ChangePasswordMutation = (
     { __typename?: 'UserResponse' }
     & RegularUserResponseFragment
   ) }
+);
+
+export type CreateCommentMutationVariables = Exact<{
+  postId: Scalars['Int'];
+  parentId?: Maybe<Scalars['Int']>;
+  text: Scalars['String'];
+}>;
+
+
+export type CreateCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { createComment?: Maybe<(
+    { __typename?: 'Comment' }
+    & Pick<Comment, 'id' | 'text' | 'commentorId' | 'parentId' | 'postId'>
+  )> }
 );
 
 export type CreatePostMutationVariables = Exact<{
@@ -279,6 +320,23 @@ export type VoteMutationVariables = Exact<{
 export type VoteMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'vote'>
+);
+
+export type GetCommentsQueryVariables = Exact<{
+  postId: Scalars['Int'];
+}>;
+
+
+export type GetCommentsQuery = (
+  { __typename?: 'Query' }
+  & { getComments?: Maybe<Array<(
+    { __typename?: 'Comment' }
+    & Pick<Comment, 'id' | 'text' | 'postId' | 'parentId'>
+    & { commentor: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username'>
+    ) }
+  )>> }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -376,6 +434,21 @@ export const ChangePasswordDocument = gql`
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
 };
+export const CreateCommentDocument = gql`
+    mutation createComment($postId: Int!, $parentId: Int, $text: String!) {
+  createComment(postId: $postId, parentId: $parentId, text: $text) {
+    id
+    text
+    commentorId
+    parentId
+    postId
+  }
+}
+    `;
+
+export function useCreateCommentMutation() {
+  return Urql.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument);
+};
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
@@ -466,6 +539,24 @@ export const VoteDocument = gql`
 
 export function useVoteMutation() {
   return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
+};
+export const GetCommentsDocument = gql`
+    query getComments($postId: Int!) {
+  getComments(postId: $postId) {
+    id
+    text
+    postId
+    parentId
+    commentor {
+      id
+      username
+    }
+  }
+}
+    `;
+
+export function useGetCommentsQuery(options: Omit<Urql.UseQueryArgs<GetCommentsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetCommentsQuery>({ query: GetCommentsDocument, ...options });
 };
 export const MeDocument = gql`
     query Me {

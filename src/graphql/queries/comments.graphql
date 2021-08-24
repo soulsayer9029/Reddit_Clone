@@ -1,0 +1,12 @@
+query getComments($postId:Int!){
+  getComments(postId:$postId){
+    id
+    text
+    postId
+    parentId
+    commentor{
+      id
+      username
+    }
+  }
+}

@@ -54,6 +54,7 @@ const EditPost: React.FC = ({}) => {
                     </InputField>
                     <Box
                     mt={4}>
+                       
                             <InputField
                                     name="text"
                                     placeholder="text..."

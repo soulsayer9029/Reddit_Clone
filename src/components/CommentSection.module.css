@@ -1,0 +1,10 @@
+.text{
+    font-size: x-large;
+}
+.vertical {
+    border-left: 2px solid rgb(224, 219, 219);
+    height: 100px;
+    position:absolute;
+    margin:0;
+    margin-right: 0.3em;
+}

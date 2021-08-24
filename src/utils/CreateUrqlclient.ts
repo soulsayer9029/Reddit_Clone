@@ -6,11 +6,12 @@ import { DeletePostMutationVariables, LoginMutation, LogoutMutation, MeDocument,
 import { betterUpdateQuery } from "./betterUpdateQuery";
 import { isServer } from './isServer';
 
-const invalidatePostsCache=(cache:Cache)=>{
+const invalidateCache=(cache:Cache,type:string)=>{
   const allFields=cache.inspectFields("Query")
-  const fieldInfos=allFields.filter((info)=>info.fieldName==="posts")
+  
+  const fieldInfos=allFields.filter((info)=>info.fieldName===type)
   fieldInfos.forEach((fi)=>{
-    cache.invalidate("Query","posts",fi.arguments || {})
+    cache.invalidate("Query",type,fi.arguments || {})
   })
 
 }
@@ -40,6 +41,7 @@ const cursorPagination = (): Resolver<any, any, any> => {
   return (_parent, fieldArgs, cache, info) => {
     const { parentKey: entityKey, fieldName } = info;
     const allFields = cache.inspectFields(entityKey);
+    // console.log(allFields)
     const fieldInfos = allFields.filter(info => info.fieldName === fieldName);
     const size = fieldInfos.length;
     if (size === 0) {
@@ -137,7 +139,7 @@ export const createUrqlClient=(ssrExchange:any,ctx:any)=>{
                     }
                   }
                 })
-                invalidatePostsCache(cache)
+                invalidateCache(cache,"posts")
 
               },
               register:(_result,args,cache,info)=>{
@@ -159,9 +161,13 @@ export const createUrqlClient=(ssrExchange:any,ctx:any)=>{
                 })
               },
               createPost:(_result,args,cache,info)=>{
-                invalidatePostsCache(cache)
+                invalidateCache(cache,"posts")
                 
               },
+              createComment:(_result,args,cache,info)=>{
+                invalidateCache(cache,"getComments")
+                
+              }
             }
           }
         }),errorExchange,ssrExchange, fetchExchange],

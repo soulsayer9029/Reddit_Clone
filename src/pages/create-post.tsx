@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { InputField } from '../components/InputField';
 import { Layout } from '../components/Layout';
-import { useCreatePostMutation} from '../generated/graphql';
+import { useCreatePostMutation } from '../generated/graphql';
 import { createUrqlClient } from '../utils/CreateUrqlclient';
 import { useIsAuth } from '../utils/useIsAuth';
 
@@ -22,8 +22,9 @@ const CreatePost: React.FC<createPostProps> = ({}) => {
                 <Formik 
                initialValues={{title:"",text:""}}
                onSubmit={async(values)=>{
-                    // console.log(values)
+                    console.log(values)
                     const {error} = await createPost({input:values})
+        
 
                     console.log(error)
                     if(!error){
@@ -40,13 +41,23 @@ const CreatePost: React.FC<createPostProps> = ({}) => {
                         </InputField>
                         <Box
                         mt={4}>
-                                <InputField
+                                
+                               
+                               
+
+                               
+                               <InputField
                                         name="text"
                                         placeholder="text..."
                                         label="Description"
                                         textarea={true}
+                                        
                                         >
+                                                
                                 </InputField>
+                               
+                                
+                               
                         </Box>    
 
                         <Button 

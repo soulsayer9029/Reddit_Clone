@@ -1,5 +1,6 @@
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
 import theme from '../theme';
+import 'react-quill/dist/quill.snow.css'
 
 
 function MyApp({ Component, pageProps }:any) {
