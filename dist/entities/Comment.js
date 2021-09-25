@@ -32,8 +32,8 @@ __decorate([
 ], Comment.prototype, "commentor", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => Post_1.Post, (post) => post.comments),
-    __metadata("design:type", Post_1.Post)
-], Comment.prototype, "post", void 0);
+    __metadata("design:type", String)
+], Comment.prototype, "onDelete", void 0);
 __decorate([
     type_graphql_1.Field(),
     typeorm_1.Column(),

@@ -31,6 +31,7 @@ export class Comment extends BaseEntity{
 
  
   @ManyToOne(()=>Post,(post)=>post.comments)
+  onDelete:'CASCADE'
   post:Post
 
   @Field()
