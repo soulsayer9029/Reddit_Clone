@@ -50,7 +50,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({postId,commentObj
 >
 <ModalOverlay/>
 <ModalContent>
-<ModalHeader>Add a Reply {c.id}</ModalHeader>
+<ModalHeader>Add a Reply </ModalHeader>
 <ModalCloseButton />
 <Formik 
 initialValues={{reply:""}}
